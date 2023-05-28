@@ -120,7 +120,9 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     paths: pokmeons151.map((id) => ({
       params: { id },
     })),
-    fallback: false,
+    //! false manda a la pagina 404 si no existe
+    // fallback: false,
+    fallback: "blocking",
   };
 };
 
@@ -128,10 +130,23 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params as { id: string };
 
+  const pokemon = await getPokemonInfo(id);
+
+  if (!pokemon) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
-      pokemon: await getPokemonInfo(id),
+      pokemon,
     },
+    //! revalida y recarga cada cierto tiempo (segundos)
+    revalidate: 86400,
   };
 };
 
