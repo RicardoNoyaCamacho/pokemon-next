@@ -16,7 +16,6 @@ const HomePage: NextPage<Props> = ({ pokemons }) => {
         {pokemons.map((pokemon) => (
           <PokemonCard pokemon={pokemon} key={pokemon.id} />
         ))}
-        <li>Pokémon</li>
       </Grid.Container>
     </Layout>
   );
