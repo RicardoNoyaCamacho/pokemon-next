@@ -120,7 +120,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     paths: pokmeonName.map((name) => ({
       params: { name },
     })),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
